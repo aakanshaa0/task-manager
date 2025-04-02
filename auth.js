@@ -3,12 +3,10 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 function auth(req, res, next){
-    const token = req.headers.token;
+    const token = req.headers.token || (req.cookies ? req.cookies.token : null);
 
     if(!token){
-        return res.status(401).json({
-            messsage: "Issue generating token"
-        })
+        return res.redirect('/signin');
     }
 
     try{
@@ -19,9 +17,8 @@ function auth(req, res, next){
         }
     }
     catch(e){
-        res.status(403).json({
-            message: "Incorrect Credentials"
-        })
+        res.clearCookie('token');
+        res.redirect('/signin');
     }
 }
 

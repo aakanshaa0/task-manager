@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Tasks</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%-include('partials/header')%>
+    <div class="container">
+        <h2>Your Tasks</h2>
+        <form action="/todo" method="POST">
+            <input type="text" name="title" placeholder="Enter task" required>
+            <div class="datetime-container">
+                <input type="date" name="dueDate" required>
+                <input type="time" name="dueTime" required>
+            </div>
+            <button type="submit" class="btn-primary">Add Task</button>
+        </form>
+
+        <ul>
+            <% todos.forEach(todo => { %>
+                <li class="todo-item <%= todo.done ? 'completed' : '' %>">
+                    <div class="todo-info">
+                        <div class="todo-title"><%= todo.title %></div>
+                        <div class="todo-due">
+                            <span>Due: <%= new Date(todo.dueDate).toDateString() %></span>
+                            <% if (todo.dueTime) { %>
+                                <span>at <%= todo.dueTime %></span>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="todo-actions">
+                        <% if(!todo.done) { %>
+                            <button class="btn-success" onclick="markDone('<%= todo._id %>')">✓ Done</button>
+                        <% } else { %>
+                            <button class="btn-completed">Completed</button>
+                        <% } %>
+                        <button class="btn-danger" onclick="deleteTodo('<%= todo._id %>')">✕ Delete</button>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+
+    <script>
+        function markDone(id) {
+            fetch(`/todo/${id}/done`, { 
+                method: "PUT",
+                credentials: 'include'
+            }).then(() => window.location.reload());
+        }
+
+        function deleteTodo(id) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                fetch(`/todo/${id}`, { 
+                    method: "DELETE",
+                    credentials: 'include'
+                }).then(() => window.location.reload());
+            }
+        }
+    </script>
+    <%-include('partials/footer')%>
+</body>
+</html>

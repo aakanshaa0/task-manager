@@ -13,7 +13,8 @@ const Todo = new Schema({
     done: {type: Boolean, default: false},
     userId: {type: ObjectId, ref: "users", required: true},
     createdAt: {type: Date, default: Date.now},
-    dueDate: {type: Date, required: true}
+    dueDate: {type: Date, required: true},
+    dueTime: {type: String, required: true}
 })
 
 const UserModel = mongoose.model('users', User);
