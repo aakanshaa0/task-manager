@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <%-include('partials/header')%>
     <div class="container">
         <h2>Your Tasks</h2>
         <form action="/todo" method="POST">
@@ -17,6 +16,10 @@
                 <input type="time" name="dueTime" required>
             </div>
             <button type="submit" class="btn-primary">Add Task</button>
+        </form>
+
+        <form action="/logout" method="POST" class="logout-form">
+            <button type="submit" class="btn-danger">Logout</button>
         </form>
 
         <ul>
@@ -61,6 +64,5 @@
             }
         }
     </script>
-    <%-include('partials/footer')%>
 </body>
 </html>
