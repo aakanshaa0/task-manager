@@ -280,6 +280,7 @@
     .container {
       padding: 20px;
       margin: 15px auto;
+      width: 80%;
     }
   
     .datetime-container {
