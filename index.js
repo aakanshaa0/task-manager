@@ -211,4 +211,4 @@ app.post('/logout', (req, res) => {
     res.redirect('/signin');
 });
 
-module.exports = app;
+app.listen(3000, ()=>console.log("Running on port 3000"));
