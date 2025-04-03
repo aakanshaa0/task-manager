@@ -39,6 +39,10 @@ const todoSchema = z.object({
     dueDate: z.string().transform((str)=>new Date(str)) //Converts string to date
 })
 
+app.get("//", function(req, res){
+    res.redirect("signin");
+});
+
 app.get("/signup", function(req, res){
     res.render("signup");
 });
